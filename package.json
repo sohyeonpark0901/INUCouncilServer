@@ -1,0 +1,23 @@
+{
+  "name": "inucouncilserver",
+  "version": "1.0.0",
+  "description": "first test",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inu-appcenter/INUCouncilServer.git"
+  },
+  "author": "sohyeon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/inu-appcenter/INUCouncilServer/issues"
+  },
+  "homepage": "https://github.com/inu-appcenter/INUCouncilServer#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "mysql": "^2.16.0"
+  }
+}
