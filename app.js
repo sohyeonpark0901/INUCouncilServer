@@ -5,12 +5,13 @@ var bodyParser = require('body-parser');
 var passport = require('passport')
 
 const login = require('./routes/login')
-
-
+const addressSelect=require('./routes/addressSelect');
+const addressSave=require('./routes/addressSave');
 
 var app=express();
 
-app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:true}));
 app.use(session({
   secret:'12345asdasd-',
   resave: false,
@@ -28,8 +29,8 @@ app.use(passport.session());
 
 
 app.use('/login',login)
-
-
+app.use('/addressSelect',addressSelect)
+app.use('/addressSave',addressSave);
 
 app.listen(7001,function(){
   console.log('Connected 7001 port');
