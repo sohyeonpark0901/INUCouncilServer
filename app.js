@@ -7,7 +7,7 @@ var passport = require('passport')
 const login = require('./routes/login')
 const addressSelect=require('./routes/addressSelect');
 const addressSave=require('./routes/addressSave');
-
+const calendar=require('./routes/calendar');
 var app=express();
 
 app.use(bodyParser.json());
@@ -31,7 +31,7 @@ app.use(passport.session());
 app.use('/login',login)
 app.use('/addressSelect',addressSelect)
 app.use('/addressSave',addressSave);
-
+app.use('/calendar',calendar);
 app.listen(7001,function(){
   console.log('Connected 7001 port');
 })
