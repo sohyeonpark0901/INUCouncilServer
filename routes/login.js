@@ -22,7 +22,8 @@ passport.serializeUser(function(user, done) {
   console.log('serializeUser',user);
   done(null,user.username);
 });
-/*passport.deserializeUser(function(id, done) {
+/*
+passport.deserializeUser(function(id, done) {
   console.log('deserializeUser',id)
   var sql='SELECT * FROM users WHERE username=?';
   pool.getConnection((err,connection) =>{
@@ -35,14 +36,14 @@ passport.serializeUser(function(user, done) {
         } else{
           done(null,results[0]);
         }
-        connection.destroy();
+        connection.destroy()
       })
 
     }
   });
 
-});
-*/
+});*/
+
 
 passport.use(new LocalStrategy(
   function(username,password,done){
