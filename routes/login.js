@@ -22,6 +22,7 @@ passport.serializeUser(function(user, done) {
   console.log('serializeUser',user);
   done(null,user.username);
 });
+/*
 passport.deserializeUser(function(id, done) {
   console.log('deserializeUser',id)
   var sql='SELECT * FROM users WHERE username=?';
@@ -41,7 +42,7 @@ passport.deserializeUser(function(id, done) {
     }
   });
 
-});
+});*/
 
 
 passport.use(new LocalStrategy(
