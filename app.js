@@ -2,12 +2,17 @@ var express=require('express');
 var session=require('express-session');
 var MySQLStore = require('express-mysql-session')(session);
 var bodyParser = require('body-parser');
-var passport = require('passport')
+var passport = require('passport');
+
 
 const login = require('./routes/login')
 const addressSelect=require('./routes/addressSelect');
 const addressSave=require('./routes/addressSave');
 const calendar=require('./routes/calendar');
+const boardSave=require('./routes/boardSave');
+const boardDelete=require('./routes/boardDelete');
+const boardSelect=require('./routes/boardSelect');
+
 var app=express();
 
 app.use(bodyParser.json());
@@ -32,6 +37,12 @@ app.use('/login',login)
 app.use('/addressSelect',addressSelect)
 app.use('/addressSave',addressSave);
 app.use('/calendar',calendar);
+app.use('/boardSave',boardSave);
+app.use('/boardDelete',boardDelete);
+app.use('/boardSelect',boardSelect);
+
+
+
 app.listen(7001,function(){
   console.log('Connected 7001 port');
 })
