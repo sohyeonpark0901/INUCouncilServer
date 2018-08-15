@@ -5,13 +5,19 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 
 
-const login = require('./routes/login')
+const login = require('./routes/login');
+const addressModify=require('./routes/addressModify');
+const addressDelete=require('./routes/addressDelete');
 const addressSelect=require('./routes/addressSelect');
 const addressSave=require('./routes/addressSave');
-const calendar=require('./routes/calendar');
+const calendarSave=require('./routes/calendarSave');
+const calendarDelete=require('./routes/calendarDelete');
+const calendarSelect=require('./routes/calendarSelect');
+const calendarModify=require('./routes/calendarModify')
 const boardSave=require('./routes/boardSave');
 const boardDelete=require('./routes/boardDelete');
 const boardSelect=require('./routes/boardSelect');
+const boardModify=require('./routes/boardModify');
 
 var app=express();
 
@@ -36,11 +42,16 @@ app.use(passport.session());
 app.use('/login',login)
 app.use('/addressSelect',addressSelect)
 app.use('/addressSave',addressSave);
-app.use('/calendar',calendar);
+app.use('/addressModify',addressModify);
+app.use('/addressDelete',addressDelete);
+app.use('/calendarDelete',calendarDelete);
+app.use('/calendarSelect',calendarSelect);
+app.use('/calendarSave',calendarSave);
+app.use('/calendarModify',calendarModify);
 app.use('/boardSave',boardSave);
 app.use('/boardDelete',boardDelete);
 app.use('/boardSelect',boardSelect);
-
+app.use('/boardModify',boardModify);
 
 
 app.listen(7001,function(){

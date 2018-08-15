@@ -44,41 +44,55 @@ passport.deserializeUser(function(id, done) {
 });
 
 router.post('/',upload.array('userfile',15), function(req,res){
-    console.log('Uploaded:'+req.files[0].filename);
 
-    var sql='INSERT INTO board_db (title,content,department) VALUES (?,?,?)';
+
+    let sql='INSERT INTO board_db (title,content,department) VALUES (?,?,?)';
     let sqlFile = 'INSERT INTO file_table (keyNum,fileName) VALUES ?'
-    var title=req.body.title;
-    var content=req.body.content;
-    //var file=req.files[0].filename;
-    var department=req.body.department;
+    let title=req.body.title;
+    let content=req.body.content;
+    //var file=req.files;
+     department=req.body.department;
     let Value = []
 
 
-    pool.getConnection(async (err,connection) =>{
-      if(err) throw err;
-      else{
-        await connection.query(sql,[title,content,department], async function(err,result){
-          if(err){
-            console.error(err)
-            console.log('boardSave is fail');
-          }
-          else{
-            await req.files.map(Data => Value.push([result.insertId,Data.filename]))
-            await connection.query(sqlFile,[Value],function(err){
-              if(err){
-                console.log(err)
-              }
+       pool.getConnection(async (err,connection) =>{
+         if(err) throw err;
+         else{
+          await connection.query(sql,[title,content,department], async function(err,result){
+             if(err){
+               console.log(err);
+
+            }
+            else if(req.files == null || req.files == undefined || req.files == "" ){
+
+              if(err) throw err;
               else{
+                console.log('except file board_db is save');
                 res.send(true);
-                }
-                connection.destroy();
-            })
-          }
-        })//첫번째 쿼리 끝단
-      }
-    })
-});
+              }
+              connection.destroy();
+            }
+
+           else {
+                await req.files.map(Data => Value.push([result.insertId,Data.filename]))
+                await connection.query(sqlFile,[Value],function(err){
+                 if(err){
+                    console.log(err);
+                    console.log('query err')
+                   }
+                   else{
+                     res.send(true);
+                     }
+                     connection.destroy();
+               })
+             }
+
+           })
+    
+         }
+       })
+   });
+
 
 
 module.exports=router;

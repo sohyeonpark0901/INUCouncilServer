@@ -32,22 +32,34 @@ passport.deserializeUser(function(id, done) {
 
 });
 
+
+
 router.post('/',function(req,res){
-  var sql='select * from calendar_db';
+  var sql='UPDATE address_db SET phoneNumber=?,email=?,position=?,etc=? WHERE name=?';
+  var name= req.body.name;
+  var phoneNumber=req.body.phoneNumber;
+  var email=req.body.email;
+  var position=req.body.position;
+  var etc=req.body.etc
   pool.getConnection((err,connection) =>{
     if(err) throw err;
     else{
-      connection.query(sql,function(err,result){
-        if(err){
-          throw err;
-          return done('You can get calendar_db');
-        }else{
-          res.send(result);
-        }
-        connection.destroy();
-      })
-    }
-  })
+  connection.query(sql,[phoneNumber,email,position,etc,name], function(err,result){
+     if(err){
+       console.log(err);
+       console.log('AddressModify is fail');
+     }else{
+       console.log(result);
+       res.send(true);
+     }
+     connection.destroy()
+   })
+ }
+  });
+
+
 })
 
-module.exports = router
+
+
+module.exports=router;
