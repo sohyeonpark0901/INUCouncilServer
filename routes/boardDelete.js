@@ -2,9 +2,8 @@ const express=require('express');
 const router=express.Router();
 var app=express();
 var mysql=require('mysql');
-/*var passport = require('passport')
+var passport = require('passport')
 var LocalStrategy = require('passport-local').Strategy
-*/
 var multer=require('multer');
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -23,7 +22,7 @@ var pool=mysql.createPool({
   database:'inunion',
   connectionLimit:10
 });
-/*passport.deserializeUser(function(id, done) {
+passport.deserializeUser(function(id, done) {
   console.log('deserializeUser',id)
   var sql='SELECT * FROM users WHERE username=?';
   pool.getConnection((err,connection) =>{
@@ -43,7 +42,7 @@ var pool=mysql.createPool({
   });
 
 });
-*/
+
 router.post('/',function(req,res){
     let content_serial_id=req.body.content_serial_id;
     let sql='DELETE FROM board_db WHERE content_serial_id=?';
