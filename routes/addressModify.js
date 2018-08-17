@@ -52,7 +52,7 @@ router.post('/',function(req,res){
        console.log('AddressModify is fail');
      }else{
        console.log(result);
-       res.send(true);
+      res.json({ans:true});
      }
      connection.destroy()
    })

@@ -47,7 +47,7 @@ router.post('/',function(req,res){
         if(err){
           throw err;
         }else{
-          res.send(true);
+          res.json({ans:true});
         }
         connection.destroy();
       })

@@ -50,7 +50,7 @@ router.post('/',function(req,res){
        console.log('AddressSave is fail');
      }else{
        console.log(result);
-       res.send(true);
+       res.json({ans:true});
      }
      connection.destroy()
    })

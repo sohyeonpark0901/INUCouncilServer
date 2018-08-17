@@ -65,7 +65,7 @@ router.post('/',function(req,res){
               }
               else{
                 console.log('sucess');
-                res.send(true);
+              res.json({ans:true});
               }
               connection.destroy();
             })

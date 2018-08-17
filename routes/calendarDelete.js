@@ -47,7 +47,7 @@ let scheduleId=req.body.scheduleId;
         if(err){
           throw err;
         }else{
-          res.send(true);
+        res.json({ans:true});
         }
         connection.destroy();
       })

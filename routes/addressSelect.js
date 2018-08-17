@@ -44,7 +44,7 @@ router.post('/',function(req,res){
         console.log('Address Seletion is fail');
       }else{
         console.log(result);
-        res.send(result);
+        res.json({ans:true});
       }
       connection.destroy()
     })

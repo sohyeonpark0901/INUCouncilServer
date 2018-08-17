@@ -45,7 +45,7 @@ router.post('/',function(req,res){
           throw err;
           return done('You can get calendar_db');
         }else{
-          res.send(result);
+          res.json({ans:true});
         }
         connection.destroy();
       })

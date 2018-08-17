@@ -82,7 +82,7 @@ router.post('/',upload.array('userfile',15),function(req,res){
                   console.log('query err')
                  }
                  else{
-                   res.send(true);
+                   res.json({ans:true});
                    }
                    connection.destroy();
              })
