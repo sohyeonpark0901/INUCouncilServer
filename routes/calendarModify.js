@@ -34,18 +34,17 @@ passport.deserializeUser(function(id, done) {
 
 router.post('/',function(req,res){
   let scheduleTitle=req.body.scheduleTitle;
-  let start=req.body.start;
-  let end=req.body.end;
+  let time=req.body.time;
   let position=req.body.position;
   let memo=req.body.memo;
   let department=req.body.department;
   let scheduleId=req.body.scheduleId;
 
-  let sql='UPDATE calendar_db SET scheduleTitle=?,start=?,end=?,position=?,memo=?,department=? WHERE scheduleId=?';
+  let sql='UPDATE calendar_db SET scheduleTitle=?,time=?,position=?,memo=?,department=? WHERE scheduleId=?';
   pool.getConnection((err,connection) =>{
     if(err) throw err;
     else{
-      connection.query(sql,[scheduleTitle,start,end,position,memo,department,scheduleId],function(err,result){
+      connection.query(sql,[scheduleTitle,time,position,memo,department,scheduleId],function(err,result){
         if(err){
           throw err;
           return done('You can get calendar_db');

@@ -35,16 +35,15 @@ passport.deserializeUser(function(id, done) {
 
 router.post('/',function(req,res){
   let scheduleTitle=req.body.scheduleTitle;
-  let start=req.body.start;
-  let end=req.body.end;
+  let time=req.body.time;
   let position=req.body.position;
   let memo=req.body.memo;
   let department=req.body.department;
-  let sql='INSERT INTO calendar_db (scheduleTitle,start,end,position,memo,department) VALUES (?,?,?,?,?,?)';
+  let sql='INSERT INTO calendar_db (scheduleTitle,time,position,memo,department) VALUES (?,?,?,?,?)';
   pool.getConnection(async (err,connection) =>{
     if(err) throw err;
     else{
-      await connection.query(sql,[scheduleTitle,start,end,position,memo,department],function(err,result){
+      await connection.query(sql,[scheduleTitle,time,position,memo,department],function(err,result){
         if(err){
           throw err;
         }else{
