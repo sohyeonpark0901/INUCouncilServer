@@ -36,16 +36,16 @@ var pool=mysql.createPool({
 
 
 router.post('/',function(req,res){
-  var sql='INSERT INTO address_db (name,phone_number,email,position,etc) VALUES(?,?,?,?,?)';
+  var sql='INSERT INTO address_db (name,phoneNumber,email,position,etc) VALUES(?,?,?,?,?)';
   var name= req.body.name;
-  var phone_number=req.body.phone_number;
+  var phoneNumber=req.body.phoneNumber;
   var email=req.body.email;
   var position=req.body.position;
   var etc=req.body.etc
   pool.getConnection((err,connection) =>{
     if(err) throw err;
     else{
-  connection.query(sql,[name,phone_number,email,position,etc], function(err,result){
+  connection.query(sql,[name,phoneNumber,email,position,etc], function(err,result){
      if(err){
        console.log('AddressSave is fail');
      }else{
