@@ -48,6 +48,7 @@ router.post('/',function(req,res){
           throw err;
         }else{
           res.json({ans:true});
+          console.log('calendarSave is sucess');
         }
         connection.destroy();
       })
