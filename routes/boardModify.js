@@ -70,7 +70,7 @@ router.post('/',upload.array('userfile',15),function(req,res){
            if(err) throw err;
            else{
                  console.log('only board_db is sucess');
-                 res.send(true);
+                   res.json({ans:true});
            }
            connection.destroy();
          }
