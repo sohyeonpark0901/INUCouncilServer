@@ -47,6 +47,7 @@ router.post('/',function(req,res){
     else{
   connection.query(sql,[name,phoneNumber,email,position,etc], function(err,result){
      if(err){
+       console.log(err)
        console.log('AddressSave is fail');
      }else{
        console.log(result);
