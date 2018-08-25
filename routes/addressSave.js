@@ -33,7 +33,6 @@ passport.deserializeUser(function(id, done) {
 });
 
 
-
 router.post('/',function(req,res){
   var sql='INSERT INTO address_db (name,phoneNumber,email,position,etc) VALUES(?,?,?,?,?)';
   var name= req.body.name;
