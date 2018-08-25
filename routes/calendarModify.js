@@ -1,9 +1,9 @@
 const express=require('express');
 const router=express.Router();
 var app=express();
-/*var passport = require('passport')
+var passport = require('passport')
 var LocalStrategy = require('passport-local').Strategy
-*/
+
 var mysql=require('mysql');
 var pool=mysql.createPool({
   host:'localhost',
@@ -12,7 +12,7 @@ var pool=mysql.createPool({
   database:'inunion',
   connectionLimit:10
 });
-/*passport.deserializeUser(function(id, done) {
+passport.deserializeUser(function(id, done) {
   console.log('deserializeUser',id)
   var sql='SELECT * FROM users WHERE username=?';
   pool.getConnection((err,connection) =>{
@@ -32,20 +32,21 @@ var pool=mysql.createPool({
   });
 
 });
-*/
+
 router.post('/',function(req,res){
   let scheduleTitle=req.body.scheduleTitle;
-  let time=req.body.time;
+  let startTime=req.body.startTime;
+  let endTime=req.body.endTime;
   let position=req.body.position;
   let memo=req.body.memo;
   let department=req.body.department;
   let scheduleId=req.body.scheduleId;
 
-  let sql='UPDATE calendar_db SET scheduleTitle=?,time=?,position=?,memo=?,department=? WHERE scheduleId=?';
+  let sql='UPDATE calendar_db SET scheduleTitle=?,startTime=?,endTime=?,position=?,memo=?,department=? WHERE scheduleId=?';
   pool.getConnection((err,connection) =>{
     if(err) throw err;
     else{
-      connection.query(sql,[scheduleTitle,time,position,memo,department,scheduleId],function(err,result){
+      connection.query(sql,[scheduleTitle,startTime,endTime,position,memo,department,scheduleId],function(err,result){
         if(err){
           throw err;
           return done('You can get calendar_db');
