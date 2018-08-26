@@ -33,7 +33,7 @@ passport.deserializeUser(function(id, done) {
 
 
 router.post('/',function(req,res){
-    var sql= 'select name FROM address_db WHERE name=?';
+    var sql= 'SELECT * FROM address_db WHERE name=?';
     var name= req.body.name;
     pool.getConnection((err,connection) =>{
       if(err) throw err;
