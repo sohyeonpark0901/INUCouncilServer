@@ -33,14 +33,14 @@ passport.deserializeUser(function(id, done) {
 
 
 router.post('/',function(req,res){
-    var sql= 'select name FROM address_db WHERE name=?';
+    var sql= 'select name FROM address_db ORDER BY name';
     var name= req.body.name;
     pool.getConnection((err,connection) =>{
       if(err) throw err;
       else{
-    connection.query(sql,[name],function(err,result){
+    connection.query(sql,function(err,result){
       if(err){
-        console.log('Address Seletion is fail');
+        console.log('Address Sort is fail');
       }else{
         console.log(result);
         res.json({ans:true});

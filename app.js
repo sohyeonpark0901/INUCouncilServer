@@ -9,6 +9,7 @@ const login = require('./routes/login');
 const addressModify=require('./routes/addressModify');
 const addressDelete=require('./routes/addressDelete');
 const addressSelect=require('./routes/addressSelect');
+const addressSort=require('./routes/addressSort');
 const addressSave=require('./routes/addressSave');
 const calendarSave=require('./routes/calendarSave');
 const calendarDelete=require('./routes/calendarDelete');
@@ -40,7 +41,8 @@ app.use(passport.session());
 
 
 app.use('/login',login)
-app.use('/addressSelect',addressSelect)
+app.use('/addressSelect',addressSelect);
+app.use('/addressSort',addressSort);
 app.use('/addressSave',addressSave);
 app.use('/addressModify',addressModify);
 app.use('/addressDelete',addressDelete);
