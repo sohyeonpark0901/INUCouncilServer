@@ -62,7 +62,7 @@ router.post('/',function(req,res){
               console.log('sql select is fail');
             }else{
               console.log('sucess');
-              res.json({ans:true});
+              res.send(result);
             }
             connection.destroy();
           })
