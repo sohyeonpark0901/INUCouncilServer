@@ -43,7 +43,7 @@ router.post('/',function(req,res){
         console.log('Address Sort is fail');
       }else{
         console.log(result);
-        res.json({ans:true});
+        res.send(result);
       }
       connection.destroy()
     })
