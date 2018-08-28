@@ -34,12 +34,12 @@ passport.deserializeUser(function(id, done) {
 
 
 router.post('/',function(req,res){
-  let scheduleId=req.body.scheduleId;
-  let sql='SELECT * FROM calendar_db WHERE scheduleId=?';
+  let department=req.body.department;
+  let sql='SELECT * FROM calendar_db WHERE department=? ORDER BY startDate';
   pool.getConnection((err,connection) =>{
     if(err) throw err;
     else{
-      connection.query(sql,[scheduleId],function(err,result){
+      connection.query(sql,[department],function(err,result){
         if(err){
           throw err;
           return done('You can get calendar_db');
