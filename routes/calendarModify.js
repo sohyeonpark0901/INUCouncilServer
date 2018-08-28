@@ -37,16 +37,18 @@ router.post('/',function(req,res){
   let scheduleTitle=req.body.scheduleTitle;
   let startTime=req.body.startTime;
   let endTime=req.body.endTime;
+  let startDate=req.body.startDate;
+  let endDate=req.body.endDate;
   let position=req.body.position;
   let memo=req.body.memo;
   let department=req.body.department;
   let scheduleId=req.body.scheduleId;
 
-  let sql='UPDATE calendar_db SET scheduleTitle=?,startTime=?,endTime=?,position=?,memo=?,department=? WHERE scheduleId=?';
+  let sql='UPDATE calendar_db SET scheduleTitle=?,startTime=?,endTime=?,startDate=?,endDate=?,position=?,memo=?,department=? WHERE scheduleId=?';
   pool.getConnection((err,connection) =>{
     if(err) throw err;
     else{
-      connection.query(sql,[scheduleTitle,startTime,endTime,position,memo,department,scheduleId],function(err,result){
+      connection.query(sql,[scheduleTitle,startTime,endTime,startDate,endDate,position,memo,department,scheduleId],function(err,result){
         if(err){
           throw err;
           return done('You can get calendar_db');
