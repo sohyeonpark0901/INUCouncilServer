@@ -36,13 +36,13 @@ passport.deserializeUser(function(id, done) {
 
 
 router.post('/',function(req,res){
-  var sql='DELETE FROM address_db WHERE name=?';
-  var name= req.body.name;
+  var sql='DELETE FROM address_db WHERE addressId=?';
+  var addressId= req.body.addressId;
 
   pool.getConnection((err,connection) =>{
     if(err) throw err;
     else{
-  connection.query(sql,[name], function(err,result){
+  connection.query(sql,[addressId], function(err,result){
      if(err){
        console.log(err);
        console.log('AddressDelete is fail');
