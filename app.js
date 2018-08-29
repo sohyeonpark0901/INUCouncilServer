@@ -39,6 +39,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use('/imgload',express.static('board_file_save/'));
 
 app.use('/login',login)
 app.use('/addressSelect',addressSelect);
