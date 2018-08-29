@@ -63,7 +63,6 @@ passport.use(new LocalStrategy(
           var user=results[0];
           console.log(user)
           if(user == undefined){
-            res.json({ans:false})
             done(null,false)
           }
           else{
@@ -73,7 +72,6 @@ passport.use(new LocalStrategy(
             done(null,user);
           }
           else{
-            res.json({ans:false})
             done(null,false)
           }
           connection.destroy()
