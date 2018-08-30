@@ -36,7 +36,7 @@ passport.deserializeUser(function(id, done) {
 
 
 router.post('/',function(req,res){
-  var sql='UPDATE address_db SET name=?,phoneNumber=?,email=?,position=?,etc=?,department WHERE addressId=?';
+  var sql='UPDATE address_db SET name=?,phoneNumber=?,email=?,position=?,etc=?,department=? WHERE addressId=?';
   var name= req.body.name;
   var phoneNumber=req.body.phoneNumber;
   var email=req.body.email;
