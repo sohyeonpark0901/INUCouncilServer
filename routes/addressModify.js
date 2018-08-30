@@ -36,17 +36,18 @@ passport.deserializeUser(function(id, done) {
 
 
 router.post('/',function(req,res){
-  var sql='UPDATE address_db SET name=?,phoneNumber=?,email=?,position=?,etc=? WHERE addressId=?';
+  var sql='UPDATE address_db SET name=?,phoneNumber=?,email=?,position=?,etc=?,department WHERE addressId=?';
   var name= req.body.name;
   var phoneNumber=req.body.phoneNumber;
   var email=req.body.email;
   var position=req.body.position;
   var etc=req.body.etc;
+  var department=req.body.department;
   var addressId=req.body.addressId;
   pool.getConnection((err,connection) =>{
     if(err) throw err;
     else{
-  connection.query(sql,[name,phoneNumber,email,position,etc,addressId], function(err,result){
+  connection.query(sql,[name,phoneNumber,email,position,etc,department,addressId], function(err,result){
      if(err){
        console.log(err);
        console.log('AddressModify is fail');
