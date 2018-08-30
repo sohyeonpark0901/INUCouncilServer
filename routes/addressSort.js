@@ -10,13 +10,13 @@ var pool=mysql.createPool({
   database:'inunion',
   connectionLimit:10
 });
-passport.deserializeUser(function(id, done) {
-  console.log('deserializeUser',id)
+passport.deserializeUser(function(department, done) {
+  console.log('deserializeUser',department)
   var sql='SELECT * FROM users WHERE username=?';
   pool.getConnection((err,connection) =>{
     if(err) throw err;
     else{
-      connection.query(sql,[id],function(err,results){
+      connection.query(sql,[department],function(err,results){
         if(err){
           console.log(err);
           done('There is no user des');
@@ -30,7 +30,6 @@ passport.deserializeUser(function(id, done) {
   });
 
 });
-
 
 router.post('/',function(req,res){
     var sql= 'select name FROM address_db ORDER BY name';
