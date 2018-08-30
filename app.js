@@ -19,7 +19,7 @@ const boardSave=require('./routes/boardSave');
 const boardDelete=require('./routes/boardDelete');
 const boardSelect=require('./routes/boardSelect');
 const boardModify=require('./routes/boardModify');
-
+const boardSort=require('./routes/boardSort');
 var app=express();
 
 app.use(bodyParser.json());
@@ -55,7 +55,7 @@ app.use('/boardSave',boardSave);
 app.use('/boardDelete',boardDelete);
 app.use('/boardSelect',boardSelect);
 app.use('/boardModify',boardModify);
-
+app.use('/boardSort',boardSort);
 
 app.listen(7001,function(){
   console.log('Connected 7001 port');
