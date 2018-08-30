@@ -44,23 +44,17 @@ passport.deserializeUser(function(id, done) {
 });
 
 router.post('/',function(req,res){
-  let sqlJoin='SELECT * FROM board_db LEFT JOIN file_table ON board_db.content_serial_id=file_table.keyNum';
-  let sql='SELECT * FROM board_db WHERE department=?';
+  let sqlJoin='SELECT * FROM board_db INNER JOIN file_table ON board_db.content_serial_id=file_table.keyNum WHERE department=?;';
   let department=req.body.department;
   pool.getConnection(async (err,connection) => {
     if(err) throw err;
     else{
-      await connection.query(sqlJoin,async function(err,result){
+      await connection.query(sqlJoin,[department],async function(err,result){
         if(err){
           console.log(err);
           console.log('join is fail');
         }
         else{
-          await  connection.query(sql,[department],function(err,result){
-            if(err){
-              console.log(err);
-              console.log('sql sort is fail');
-            }else{
               console.log('sql sort is sucess');
               res.send(result);
             }
@@ -68,8 +62,6 @@ router.post('/',function(req,res){
           })
         }
       })
-    }
-  })
 })
 
 
