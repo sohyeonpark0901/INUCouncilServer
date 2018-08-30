@@ -97,8 +97,22 @@ passport.use(new LocalStrategy(
 
 
 router.post('/',passport.authenticate('local'),function(req,res){
-  res.json({ans:true})
-//  connection.distroy();
+
+  let sql='SELECT * FROM users WHERE username=?';
+  let username=req.body.username;
+  pool.getConnection((err,connection)=>{
+    if(err) throw err;
+    else{
+      connection.query(sql,[username],function(err,result){
+        if(err) throw err;
+        else{
+          res.send(result);
+        }
+        connection.destroy();
+      })
+    }
+  })
+
   })
 
 module.exports = router
