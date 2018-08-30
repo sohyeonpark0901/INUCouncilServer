@@ -55,7 +55,6 @@ router.post('/',upload.array('userfile',15), function(req,res){
     let department=req.body.department;
     let Value = []
 
-
        pool.getConnection(async (err,connection) =>{
          if(err) throw err;
          else{
@@ -93,7 +92,5 @@ router.post('/',upload.array('userfile',15), function(req,res){
          }
        })
    });
-
-
 
 module.exports=router;
