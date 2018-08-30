@@ -47,14 +47,13 @@ router.post('/',upload.array('userfile',15), function(req,res){
 
 
     let sql='INSERT INTO board_db (title,content,department) VALUES (?,?,?)';
-    let sqlFile = 'INSERT INTO file_table (keyNum,fileName) VALUES ?';
+    let sqlFile = 'INSERT INTO file_table (keyNum,fileName,fileDirectory) VALUES ?';
 
     let title=req.body.title;
     let content=req.body.content;
     //var file=req.files;
     let department=req.body.department;
     let Value = []
-
 
        pool.getConnection(async (err,connection) =>{
          if(err) throw err;
@@ -75,7 +74,7 @@ router.post('/',upload.array('userfile',15), function(req,res){
             }
 
            else {
-                await req.files.map(Data => Value.push([result.insertId,Data.filename]))
+                await req.files.map(Data => Value.push([result.insertId,Data.filename,Data.path]))
                 await connection.query(sqlFile,[Value],function(err){
                  if(err){
                     console.log(err);
@@ -93,7 +92,5 @@ router.post('/',upload.array('userfile',15), function(req,res){
          }
        })
    });
-
-
 
 module.exports=router;
