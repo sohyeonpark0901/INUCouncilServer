@@ -44,22 +44,34 @@ passport.deserializeUser(function(department, done) {
 });
 
 router.post('/',function(req,res){
-
   let sql='SELECT * FROM board_db WHERE content_serial_id=?&&department=?';
+  let sqlFile='SELECT fileName FROM file_table WHERE keyNum=?';
+  let content_serial_id=req.body.content_serial_id;
   let department=req.body.department;
-  let key=req.body.content_serial_id;
+
   pool.getConnection(async (err,connection) => {
     if(err) throw err;
     else{
-      await connection.query(sql,[key,department],async function(err,result){
-      if(err){
-        console.log(err);
-        console.log('sql is fail');
-      }
-      else{
-        console.log('boardSelect only one is sucess');
-        res.send(result);
-      }
+      await connection.query(sql,[content_serial_id,department],async function(err,result){
+        if(err){
+          console.log(err);
+          console.log('sql is fail');
+        }
+        else{
+          let sendObject=result[0];
+          await  connection.query(sqlFile,[content_serial_id],function(err,result){
+            if(err){
+              console.log(err);
+              console.log('sql select is fail');
+            }else{
+              let fileArray=[]
+              result.map((file)=>{fileArray.push(file.fileName)})
+              sendObject["fileName"] = fileArray;
+              res.send(sendObject);
+            }
+            connection.destroy();
+          })
+        }
       })
     }
   })
