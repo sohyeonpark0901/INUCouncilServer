@@ -98,15 +98,24 @@ passport.use(new LocalStrategy(
 
 router.post('/',passport.authenticate('local'),function(req,res){
 
-  let sql='SELECT * FROM users WHERE username=?';
+  let sql='SELECT department FROM users WHERE username=?';
   let username=req.body.username;
+
   pool.getConnection((err,connection)=>{
     if(err) throw err;
     else{
-      connection.query(sql,[username],function(err,result){
+      connection.query(sql,[username],async function(err,result){
         if(err) throw err;
         else{
-          res.send(result);
+          // const anstrue = {ans:true}
+          // console.log(result)
+          // let sendArray = await Object.assign(result,anstrue)
+          //result.push({ans:true})
+        //  sendArray.push({ans:true})
+
+          let sendArray = {ans:true, department:result[0].department};
+            res.send(sendArray);
+
         }
         connection.destroy();
       })
