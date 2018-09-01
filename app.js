@@ -21,6 +21,7 @@ const boardSelect=require('./routes/boardSelect');
 const boardModify=require('./routes/boardModify');
 const boardSort=require('./routes/boardSort');
 const boardSelectOne=require('./routes/boardSelectOne');
+const addressSelectAll=require('./routes/addressSelectAll');
 
 var app=express();
 
@@ -49,6 +50,7 @@ app.use('/addressSort',addressSort);
 app.use('/addressSave',addressSave);
 app.use('/addressModify',addressModify);
 app.use('/addressDelete',addressDelete);
+app.use('/addressSelectAll',addressSelectAll);
 app.use('/calendarDelete',calendarDelete);
 app.use('/calendarSelect',calendarSelect);
 app.use('/calendarSave',calendarSave);

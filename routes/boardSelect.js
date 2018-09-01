@@ -44,27 +44,37 @@ passport.deserializeUser(function(department, done) {
 });
 
 router.post('/',function(req,res){
-  let sqlJoin='SELECT * FROM board_db LEFT JOIN file_table ON board_db.content_serial_id=file_table.keyNum';
-  let sql='SELECT * FROM board_db WHERE content_serial_id=?';
-  let key=req.body.content_serial_id;
+  let sql='SELECT * FROM board_db WHERE department=?';
+  let sqlFile=' SELECT fileName,keyNum FROM file_table INNER JOIN board_db ON board_db.content_serial_id=file_table.keyNum WHERE board_db.department=?';
+
+  let department=req.body.department;
+
   pool.getConnection(async (err,connection) => {
     if(err) throw err;
     else{
-      await connection.query(sqlJoin,async function(err,result){
+      await connection.query(sql,[department],async function(err,result){
         if(err){
           console.log(err);
-          console.log('join is fail');
+          console.log('sql is fail');
         }
         else{
-          await  connection.query(sql,[key],function(err,result){
+          let content_serial_id=result[0].content_serial_id;
+          let sendObject=result[0];
+          await  connection.query(sqlFile,[department],function(err,result){
             if(err){
               console.log(err);
               console.log('sql select is fail');
-            }else{
-              console.log('sucess');
-              res.send(result);
+            }else if(content_serial_id==result[0].keyNum){
+              if(err) throw err;
+              else{
+                let fileArray=[]
+                result.map((file)=>{fileArray.push(file.fileName)})
+                sendObject["fileName"] = fileArray;
+                res.send(sendObject);
+              }
+              connection.destroy();
             }
-            connection.destroy();
+
           })
         }
       })
