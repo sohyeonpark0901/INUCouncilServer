@@ -31,15 +31,16 @@ passport.deserializeUser(function(department, done) {
 
 });
 
+
 router.post('/',function(req,res){
-    var sql= 'SELECT name FROM address_db WHERE department=? ORDER BY name;';
+    var sql= 'SELECT * FROM address_db WHERE department=?';
     var department= req.body.department;
     pool.getConnection((err,connection) =>{
       if(err) throw err;
       else{
-    connection.query(sql,department,function(err,result){
+    connection.query(sql,[department],function(err,result){
       if(err){
-        console.log('Address Sort is fail');
+        console.log('Address Seletion is fail');
       }else{
         console.log(result);
         res.send(result);

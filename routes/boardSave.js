@@ -47,7 +47,7 @@ router.post('/',upload.array('userfile',15), function(req,res){
 
 
     let sql='INSERT INTO board_db (title,content,department) VALUES (?,?,?)';
-    let sqlFile = 'INSERT INTO file_table (keyNum,fileName,fileDirectory) VALUES ?';
+    let sqlFile = 'INSERT INTO file_table (keyNum,fileName,fileDirectory,department) VALUES ?';
 
     let title=req.body.title;
     let content=req.body.content;
@@ -68,19 +68,22 @@ router.post('/',upload.array('userfile',15), function(req,res){
               if(err) throw err;
               else{
                 console.log('except file board_db is save');
+
                 res.json({ans:true});
               }
               connection.destroy();
             }
 
            else {
-                await req.files.map(Data => Value.push([result.insertId,Data.filename,Data.path]))
+             console.log(result);
+                await req.files.map(Data => Value.push([result.insertId,Data.filename,Data.path,department]))
                 await connection.query(sqlFile,[Value],function(err){
                  if(err){
                     console.log(err);
                     console.log('query err')
                    }
                    else{
+
                      res.json({ans:true});
                      }
                      connection.destroy();
