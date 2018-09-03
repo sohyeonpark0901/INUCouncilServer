@@ -53,7 +53,7 @@ router.post('/',upload.array('userfile',15),function(req,res){
     let Value = []
     let sqlUpdate='UPDATE board_db set title=?,content=?,department=? WHERE content_serial_id=?';
     let sqlFileDelete='DELETE FROM file_table WHERE keyNum=?';
-    let sqlFileInsert='INSERT INTO file_table (keyNum,fileName) VALUES ?';
+    let sqlFileInsert='INSERT INTO file_table (keyNum,fileName,department) VALUES ?';
     pool.getConnection(async (err,connection) =>{
       if(err) throw err;
       else{
@@ -76,7 +76,7 @@ router.post('/',upload.array('userfile',15),function(req,res){
            connection.destroy();
          }
          else {
-              await req.files.map(Data => Value.push([content_serial_id,Data.filename]))
+              await req.files.map(Data => Value.push([content_serial_id,Data.filename,department]))
               await connection.query(sqlFileInsert,[Value],function(err){
                if(err){
                   console.log(err);
