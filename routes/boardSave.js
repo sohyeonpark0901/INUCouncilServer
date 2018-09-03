@@ -75,7 +75,7 @@ router.post('/',upload.array('userfile',15), function(req,res){
             }
 
            else {
-             console.log(result);
+             console.log(department);
                 await req.files.map(Data => Value.push([result.insertId,Data.filename,department]))
                 await connection.query(sqlFile,[Value],function(err){
                  if(err){
