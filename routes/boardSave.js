@@ -47,7 +47,7 @@ router.post('/',upload.array('userfile',15), function(req,res){
 
 
     let sql='INSERT INTO board_db (title,content,department) VALUES (?,?,?)';
-    let sqlFile = 'INSERT INTO file_table (keyNum,fileName,fileDirectory,department) VALUES ?';
+    let sqlFile = 'INSERT INTO file_table (keyNum,fileName) VALUES ?';
 
     let title=req.body.title;
     let content=req.body.content;
@@ -76,7 +76,7 @@ router.post('/',upload.array('userfile',15), function(req,res){
 
            else {
              console.log(result);
-                await req.files.map(Data => Value.push([result.insertId,Data.filename,Data.path,department]))
+                await req.files.map(Data => Value.push([result.insertId,Data.filename]))
                 await connection.query(sqlFile,[Value],function(err){
                  if(err){
                     console.log(err);
