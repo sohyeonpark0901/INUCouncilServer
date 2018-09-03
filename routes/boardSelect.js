@@ -44,23 +44,43 @@ passport.deserializeUser(function(department, done) {
 });
 
 router.post('/',function(req,res){
-  let sql='SELECT b.*, GROUP_CONCAT(f.fileName ORDER BY b.content_serial_id) AS fileName FROM board_db b JOIN file_table f ON b.content_serial_id=f.keyNum WHERE b.department=? GROUP BY b.content_serial_id';
-
+  let sql='SELECT * FROM board_db WHERE department=?';
+  let sqlFile='SELECT * FROM file_table WHERE department=?';
 
   let department=req.body.department;
 
   pool.getConnection(async (err,connection) => {
     if(err) throw err;
     else{
-      await connection.query(sql,[department],async function(err,result){
+      await connection.query(sql,[department],function(err,resultPost){
         if(err){
           console.log(err);
-          console.log('sql is fail');
+          done('sql is fail');
         }
         else{
-          
+
+        await connection.query(sqlFile,[department],function(err,resultFile){
+          if(err){
+            console.log(err);
+            console.log('sqlFile is fail');
+
+          }
+          else{
+
+            for(i=0;i<resultPost.length;i++){
+              let fileArray=[];
+              for(j=0;j<resultFile.length;i++){
+                if(resultPost[i].content_serial_id===resultFile[j].keyNum){
+                  fileArray.push(resultFile[j].fileName);
+                }
+              }
+            resultPost[i].fileName=fileArray;
+            }
+            res.send(resultPost);
+            console.log(resultPost);
+          }
+        })
         }
-        connection.destroy();
       })
     }
   })
