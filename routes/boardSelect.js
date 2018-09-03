@@ -79,6 +79,7 @@ router.post('/',function(req,res){
             res.send(resultPost);
             console.log(resultPost);
           }
+          connection.destroy();
         })
         }
       })
