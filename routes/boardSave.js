@@ -5,6 +5,7 @@ var mysql=require('mysql');
 var passport = require('passport')
 var LocalStrategy = require('passport-local').Strategy
 var multer=require('multer');
+var path=require('path');
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'board_file_save/');
