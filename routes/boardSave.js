@@ -10,7 +10,7 @@ var storage = multer.diskStorage({
     cb(null, 'board_file_save/');
   },
   filename: function (req, file, cb) {
-    cb(null,file.originalname);
+    cb(null,new Date().valueOf() + path.extname(file.originalname));
   }
 })
 
@@ -47,7 +47,7 @@ router.post('/',upload.array('userfile',15), function(req,res){
 
 
     let sql='INSERT INTO board_db (title,content,department) VALUES (?,?,?)';
-    let sqlFile = 'INSERT INTO file_table (keyNum,fileName) VALUES ?';
+    let sqlFile = 'INSERT INTO file_table (keyNum,fileName,department) VALUES ?';
 
     let title=req.body.title;
     let content=req.body.content;
@@ -76,7 +76,7 @@ router.post('/',upload.array('userfile',15), function(req,res){
 
            else {
              console.log(result);
-                await req.files.map(Data => Value.push([result.insertId,Data.filename]))
+                await req.files.map(Data => Value.push([result.insertId,Data.filename,department]))
                 await connection.query(sqlFile,[Value],function(err){
                  if(err){
                     console.log(err);
