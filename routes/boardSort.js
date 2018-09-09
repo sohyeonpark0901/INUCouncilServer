@@ -44,7 +44,7 @@ passport.deserializeUser(function(department, done) {
 });
 
 router.post('/',function(req,res){
-  let sqlJoin='SELECT * FROM board_db INNER JOIN file_table ON board_db.content_serial_id=file_table.keyNum WHERE department=?;';
+  let sqlJoin=' SELECT * FROM board_db INNER JOIN file_table ON board_db.content_serial_id=file_table.keyNum WHERE board_db.department=? ORDER BY timeSave DESC;';
   let department=req.body.department;
   pool.getConnection(async (err,connection) => {
     if(err) throw err;
