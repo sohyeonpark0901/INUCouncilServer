@@ -4,4 +4,6 @@ npm-debug.log
 important
 .env
 .DS_Store
+board_file_save
 *.log
+

@@ -44,7 +44,7 @@ passport.deserializeUser(function(department, done) {
 });
 
 router.post('/',function(req,res){
-  let sql='SELECT * FROM board_db WHERE department=?';
+  let sql='SELECT * FROM board_db WHERE department=? ORDER BY timeSave DESC';
   let sqlFile='SELECT * FROM file_table WHERE department=?';
 
   let department=req.body.department;
@@ -52,7 +52,7 @@ router.post('/',function(req,res){
   pool.getConnection(async (err,connection) => {
     if(err) throw err;
     else{
-      await connection.query(sql,[department],function(err,resultPost){
+      await connection.query(sql,[department],async function(err,resultPost){
         if(err){
           console.log(err);
           done('sql is fail');
@@ -69,7 +69,7 @@ router.post('/',function(req,res){
 
             for(i=0;i<resultPost.length;i++){
               let fileArray=[];
-              for(j=0;j<resultFile.length;i++){
+              for(j=0;j<resultFile.length;j++){
                 if(resultPost[i].content_serial_id===resultFile[j].keyNum){
                   fileArray.push(resultFile[j].fileName);
                 }
@@ -77,7 +77,6 @@ router.post('/',function(req,res){
             resultPost[i].fileName=fileArray;
             }
             res.send(resultPost);
-            console.log(resultPost);
           }
           connection.destroy();
         })

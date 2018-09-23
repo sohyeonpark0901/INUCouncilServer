@@ -42,7 +42,6 @@ router.post('/',function(req,res){
       if(err){
         console.log('Address Seletion is fail');
       }else{
-        console.log(result);
         res.send(result);
       }
       connection.destroy()

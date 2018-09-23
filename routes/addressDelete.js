@@ -47,7 +47,6 @@ router.post('/',function(req,res){
        console.log(err);
        console.log('AddressDelete is fail');
      }else{
-       console.log(result);
       res.json({ans:true});
      }
      connection.destroy()

@@ -54,6 +54,7 @@ router.post('/',upload.array('userfile',15),function(req,res){
     let sqlUpdate='UPDATE board_db set title=?,content=?,department=? WHERE content_serial_id=?';
     let sqlFileDelete='DELETE FROM file_table WHERE keyNum=?';
     let sqlFileInsert='INSERT INTO file_table (keyNum,fileName,department) VALUES ?';
+    console.log(req.body)
     pool.getConnection(async (err,connection) =>{
       if(err) throw err;
       else{

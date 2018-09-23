@@ -43,6 +43,7 @@ router.post('/',function(req,res){
   var etc=req.body.etc;
   var department=req.body.department;
   var addressId=req.body.addressId;
+  console.log(name,phoneNumber,email,position,etc,department,addressId)
   pool.getConnection((err,connection) =>{
     if(err) throw err;
     else{
@@ -51,8 +52,13 @@ router.post('/',function(req,res){
        console.log(err);
        console.log('AddressModify is fail');
      }else{
-       console.log(result);
-      res.json({ans:true});
+      
+       if(result.affectedRows===0){
+         console.log('AddressModify is fail');
+       }
+       else{
+        res.json({ans:true});
+       }
      }
      connection.destroy()
    })
