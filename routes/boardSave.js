@@ -1,6 +1,10 @@
 const express=require('express');
 const router=express.Router();
 var app= express();
+
+var moment =require('moment');
+require('moment-timezone');
+moment.tz.setDefault("Asia/Seoul");
 var mysql=require('mysql');
 var passport = require('passport')
 var LocalStrategy = require('passport-local').Strategy
@@ -15,14 +19,15 @@ var storage = multer.diskStorage({
   }
 })
 
+const fcm = require('./fcm')
 var upload = multer({ storage: storage })
 var pool=mysql.createPool({
-  host:'localhost',
-  user:'root',
-  password:'qkrthgus1558',
-  database:'inunion',
+  host:'',
+  user:'',
+  password:'',
+  database:'',
   connectionLimit:10
-});
+}); 
 passport.deserializeUser(function(department, done) {
   console.log('deserializeUser',department)
   var sql='SELECT * FROM users WHERE username=?';
@@ -47,19 +52,21 @@ passport.deserializeUser(function(department, done) {
 router.post('/',upload.array('userfile',15), function(req,res){
 
 
-    let sql='INSERT INTO board_db (title,content,department) VALUES (?,?,?)';
+    let sql='INSERT INTO board_db (title,content,department,date) VALUES (?,?,?,?)';
     let sqlFile = 'INSERT INTO file_table (keyNum,fileName,department) VALUES ?';
+    
+    let dateSave = moment().format('YYYY-MM-DD HH:mm:ss');
 
     let title=req.body.title;
     let content=req.body.content;
-    //var file=req.files;
     let department=req.body.department;
+    
     let Value = []
 
        pool.getConnection(async (err,connection) =>{
          if(err) throw err;
          else{
-          await connection.query(sql,[title,content,department], async function(err,result){
+          await connection.query(sql,[title,content,department,dateSave], async function(err,result){
              if(err){
                console.log(err);
 
@@ -68,7 +75,8 @@ router.post('/',upload.array('userfile',15), function(req,res){
 
               if(err) throw err;
               else{
-                console.log('except file board_db is save');
+                await fcm(department);
+                    console.log('Except file boardSave and fcm is sucess');
 
                 res.json({ans:true});
               }
@@ -78,13 +86,14 @@ router.post('/',upload.array('userfile',15), function(req,res){
            else {
              console.log(result);
                 await req.files.map(Data => Value.push([result.insertId,Data.filename,department]))
-                await connection.query(sqlFile,[Value],function(err){
+                await connection.query(sqlFile,[Value], async function(err){
                  if(err){
                     console.log(err);
                     console.log('query err')
                    }
                    else{
-
+                    await fcm(department);
+                    console.log('boardSave and fcm is sucess');
                      res.json({ans:true});
                      }
                      connection.destroy();

@@ -1,16 +1,17 @@
 const express=require('express');
 const router=express.Router();
 var app=express();
+var dateFormat = require('dateformat')
 var passport = require('passport')
 var LocalStrategy = require('passport-local').Strategy
 var mysql=require('mysql');
 var pool=mysql.createPool({
-  host:'localhost',
-  user:'root',
-  password:'qkrthgus1558',
-  database:'inunion',
+  host:'',
+  user:'',
+  password:'',
+  database:'',
   connectionLimit:10
-});
+}); 
 passport.deserializeUser(function(department, done) {
   console.log('deserializeUser',department)
   var sql='SELECT * FROM users WHERE username=?';
@@ -34,22 +35,24 @@ passport.deserializeUser(function(department, done) {
 
 router.post('/',function(req,res){
   let scheduleTitle=req.body.scheduleTitle;
-  let startTime=req.body.startTime;
-  let endTime=req.body.endTime;
-  let startDate=req.body.startDate;
-  let endDate=req.body.endDate;
   let position=req.body.position;
   let memo=req.body.memo;
   let department=req.body.department;
-  let sql='INSERT INTO calendar_db (scheduleTitle,startTime,endTime,startDate,endDate,position,memo,department) VALUES (?,?,?,?,?,?,?,?)';
+  let startDate=req.body.startDate;
+  let endDate=req.body.endDate;
+  let startTime=req.body.startTime;
+  let endTime=req.body.endTime;
+  let sql='INSERT INTO calendar_db (scheduleTitle,startDate,startTime,endDate,endTime,position,memo,department) VALUES (?,?,?,?,?,?,?,?)';
+  
   pool.getConnection(async (err,connection) =>{
     if(err) throw err;
     else{
-      await connection.query(sql,[scheduleTitle,startTime,endTime,startDate,endDate,position,memo,department],function(err,result){
+      await connection.query(sql,[scheduleTitle,startDate,startTime,endDate,endTime,position,memo,department],function(err,result){
         if(err){
           throw err;
         }else{
           res.json({ans:true});
+          console.log(result);
           console.log('calendarSave is sucess');
         }
         connection.destroy();

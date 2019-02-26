@@ -1,6 +1,10 @@
 const express=require('express');
 const router=express.Router();
 var app= express();
+var moment =require('moment');
+require('moment-timezone');
+moment.tz.setDefault("Asia/Seoul");
+var date = moment().format('YYYY-MM-DD HH:mm:ss');
 var mysql=require('mysql');
 var passport = require('passport')
 var LocalStrategy = require('passport-local').Strategy
@@ -10,18 +14,18 @@ var storage = multer.diskStorage({
     cb(null, 'board_file_save/');
   },
   filename: function (req, file, cb) {
-    cb(null,file.originalname);
+    cb(null,new Date().valueOf() + path.extname(file.originalname));
   }
 })
 
 var upload = multer({ storage: storage })
 var pool=mysql.createPool({
-  host:'localhost',
-  user:'root',
-  password:'qkrthgus1558',
-  database:'inunion',
+  host:'',
+  user:'',
+  password:'',
+  database:'',
   connectionLimit:10
-});
+}); 
 passport.deserializeUser(function(department, done) {
   console.log('deserializeUser',department)
   var sql='SELECT * FROM users WHERE username=?';
@@ -44,11 +48,13 @@ passport.deserializeUser(function(department, done) {
 });
 
 router.post('/',function(req,res){
-  let sql='SELECT * FROM board_db WHERE department=? ORDER BY timeSave DESC';
+  let sql='SELECT * FROM board_db WHERE department=? ORDER BY date DESC';
+  
   let sqlFile='SELECT * FROM file_table WHERE department=?';
-
+  
   let department=req.body.department;
-
+  
+  
   pool.getConnection(async (err,connection) => {
     if(err) throw err;
     else{
@@ -77,6 +83,7 @@ router.post('/',function(req,res){
             resultPost[i].fileName=fileArray;
             }
             res.send(resultPost);
+            //console.log(resultPost);
           }
           connection.destroy();
         })

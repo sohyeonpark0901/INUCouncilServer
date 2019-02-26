@@ -4,12 +4,12 @@ var passport = require('passport')
 var LocalStrategy = require('passport-local').Strategy
 var mysql=require('mysql');
 var pool=mysql.createPool({
-  host:'localhost',
-  user:'root',
-  password:'qkrthgus1558',
-  database:'inunion',
+  host:'',
+  user:'',
+  password:'',
+  database:'',
   connectionLimit:10
-});
+}); 
 passport.deserializeUser(function(department, done) {
   console.log('deserializeUser',department)
   var sql='SELECT * FROM users WHERE username=?';
@@ -33,8 +33,8 @@ passport.deserializeUser(function(department, done) {
 
 
 router.post('/',function(req,res){
-    var sql= 'SELECT * FROM address_db WHERE name=?';
-    var name= req.body.name;
+    var sql= 'SELECT * FROM address_db WHERE addressId=?';
+    var name= req.body.addressId;
     pool.getConnection((err,connection) =>{
       if(err) throw err;
       else{

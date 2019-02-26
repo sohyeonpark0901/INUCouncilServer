@@ -5,10 +5,11 @@ var passport = require('passport')
 var LocalStrategy = require('passport-local').Strategy
 var mysql=require('mysql');
 var pool=mysql.createPool({
-  host:'localhost',
-  user:'root',
-  password:'qkrthgus1558',
-  database:'inunion',
+  host:'',
+  user:'',
+  password:'',
+  database:'',
+  dateStrings: 'date',
   connectionLimit:10
 });
 passport.deserializeUser(function(department, done) {
@@ -35,7 +36,7 @@ passport.deserializeUser(function(department, done) {
 
 router.post('/',function(req,res){
   let department=req.body.department;
-  let sql='SELECT * FROM calendar_db WHERE department=? ORDER BY startDate';
+  let sql='SELECT * FROM calendar_db WHERE department=?';
   pool.getConnection((err,connection) =>{
     if(err) throw err;
     else{
@@ -45,6 +46,7 @@ router.post('/',function(req,res){
           return done('You can get calendar_db');
         }else{
           res.send(result);
+         
         }
         connection.destroy();
       })

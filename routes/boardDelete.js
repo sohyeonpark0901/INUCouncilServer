@@ -16,12 +16,12 @@ var storage = multer.diskStorage({
 
 var upload = multer({ storage: storage })
 var pool=mysql.createPool({
-  host:'localhost',
-  user:'root',
-  password:'qkrthgus1558',
-  database:'inunion',
+  host:'',
+  user:'',
+  password:'',
+  database:'',
   connectionLimit:10
-});
+}); 
 passport.deserializeUser(function(department, done) {
   console.log('deserializeUser',department)
   var sql='SELECT * FROM users WHERE username=?';
@@ -63,7 +63,7 @@ router.post('/',function(req,res){
                 console.log('board_db Delete is fail');
               }
               else{
-                console.log('sucess');
+                console.log('board DELETE is sucess');
               res.json({ans:true});
               }
               connection.destroy();

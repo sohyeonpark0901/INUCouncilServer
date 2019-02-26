@@ -4,12 +4,12 @@ var passport = require('passport')
 var LocalStrategy = require('passport-local').Strategy
 var mysql=require('mysql');
 var pool=mysql.createPool({
-  host:'localhost',
-  user:'root',
-  password:'qkrthgus1558',
-  database:'inunion',
-  connectionLimit: 10
-});
+  host:'',
+  user:'',
+  password:'',
+  database:'',
+  connectionLimit:10
+}); 
 /*pool.getConnection((err,connection) =>{
   if(err) throw err;
   else{

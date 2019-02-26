@@ -10,18 +10,18 @@ var storage = multer.diskStorage({
     cb(null, 'board_file_save/');
   },
   filename: function (req, file, cb) {
-    cb(null,file.originalname);
+    cb(null,new Date().valueOf() + path.extname(file.originalname));
   }
 })
 
 var upload = multer({ storage: storage })
 var pool=mysql.createPool({
-  host:'localhost',
-  user:'root',
-  password:'qkrthgus1558',
-  database:'inunion',
+  host:'',
+  user:'',
+  password:'',
+  database:'',
   connectionLimit:10
-});
+}); 
 passport.deserializeUser(function(department, done) {
   console.log('deserializeUser',department)
   var sql='SELECT * FROM users WHERE username=?';

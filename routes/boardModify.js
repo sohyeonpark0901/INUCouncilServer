@@ -16,12 +16,12 @@ var storage = multer.diskStorage({
 
 var upload = multer({ storage: storage })
 var pool=mysql.createPool({
-  host:'localhost',
-  user:'root',
-  password:'qkrthgus1558',
-  database:'inunion',
+  host:'',
+  user:'',
+  password:'',
+  database:'',
   connectionLimit:10
-});
+}); 
 
 passport.deserializeUser(function(department, done) {
   console.log('deserializeUser',department)
