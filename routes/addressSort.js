@@ -4,14 +4,9 @@ var passport = require('passport')
 var LocalStrategy = require('passport-local').Strategy
 var mysql=require('mysql');
 var pool=mysql.createPool({
-  host:'',
-  user:'',
-  password:'',
-  database:'',
-  connectionLimit:10
+  
 }); 
 passport.deserializeUser(function(department, done) {
-  console.log('deserializeUser',department)
   var sql='SELECT * FROM users WHERE username=?';
   pool.getConnection((err,connection) =>{
     if(err) throw err;
@@ -39,9 +34,8 @@ router.post('/',function(req,res){
       else{
     connection.query(sql,department,function(err,result){
       if(err){
-        console.log('Address Sort is fail');
+        console.log(err);
       }else{
-        console.log(result);
         res.send(result);
       }
       connection.destroy()

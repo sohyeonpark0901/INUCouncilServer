@@ -16,14 +16,10 @@ var storage = multer.diskStorage({
 
 var upload = multer({ storage: storage })
 var pool=mysql.createPool({
-  host:'',
-  user:'',
-  password:'',
-  database:'',
-  connectionLimit:10
+ 
+
 }); 
 passport.deserializeUser(function(department, done) {
-  console.log('deserializeUser',department)
   var sql='SELECT * FROM users WHERE username=?';
   pool.getConnection((err,connection) =>{
     if(err) throw err;
@@ -54,16 +50,13 @@ router.post('/',function(req,res){
         await connection.query(sqlFile,[content_serial_id],async function(err,result){
           if(err){
             console.log(err);
-            console.log('file_table Delete is fail');
           }
           else{
           await connection.query(sql,[content_serial_id],function(err,result){
               if(err){
                 console.log(err);
-                console.log('board_db Delete is fail');
               }
               else{
-                console.log('board DELETE is sucess');
               res.json({ans:true});
               }
               connection.destroy();

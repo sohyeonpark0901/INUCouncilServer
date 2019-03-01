@@ -16,14 +16,10 @@ var storage = multer.diskStorage({
 
 var upload = multer({ storage: storage })
 var pool=mysql.createPool({
-  host:'',
-  user:'',
-  password:'',
-  database:'',
-  connectionLimit:10
+ 
+
 }); 
 passport.deserializeUser(function(department, done) {
-  console.log('deserializeUser',department)
   var sql='SELECT * FROM users WHERE username=?';
   pool.getConnection((err,connection) =>{
     if(err) throw err;
@@ -46,23 +42,24 @@ passport.deserializeUser(function(department, done) {
 router.post('/',function(req,res){
   let sql='SELECT * FROM board_db WHERE content_serial_id=?&&department=?';
   let sqlFile='SELECT fileName FROM file_table WHERE keyNum=?';
+  
   let content_serial_id=req.body.content_serial_id;
   let department=req.body.department;
-
+  
   pool.getConnection(async (err,connection) => {
     if(err) throw err;
     else{
       await connection.query(sql,[content_serial_id,department],async function(err,result){
         if(err){
           console.log(err);
-          console.log('sql is fail');
         }
         else{
           let sendObject=result[0];
           await  connection.query(sqlFile,[content_serial_id],function(err,result){
             if(err){
+              
               console.log(err);
-              console.log('sql select is fail');
+            
             }else{
               let fileArray=[]
               result.map((file)=>{fileArray.push(file.fileName)})

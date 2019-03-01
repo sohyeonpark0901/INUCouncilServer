@@ -4,10 +4,10 @@ var passport = require('passport')
 var LocalStrategy = require('passport-local').Strategy
 var mysql=require('mysql');
 var pool=mysql.createPool({
-  host:'',
-  user:'',
-  password:'',
-  database:'',
+  host:'localhost',
+  user:'root',
+  password:'qkrthgus1558',
+  database:'inunion',
   connectionLimit:10
 }); 
 /*pool.getConnection((err,connection) =>{
@@ -61,14 +61,12 @@ passport.use(new LocalStrategy(
           }
           else{
           var user=results[0];
-          console.log(user)
           if(user == undefined){
             done(null,false)
           }
           else{
 
           if(user.password == pwd){
-            console.log('success')
             done(null,user);
           }
           else{

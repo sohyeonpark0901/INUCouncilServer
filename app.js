@@ -28,15 +28,15 @@ var app=express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(session({
-  secret:'',
+  secret:'12345asdasd-',
   resave: false,
   saveUninitialized: true,
   store:new MySQLStore({
-    host:'',
-    port:,
-    user:'',
-    password:'',
-    database:''
+    host:'localhost',
+    port:3306,
+    user:'root',
+    password:'qkrthgus1558',
+    database:'inunion'
   })
 }));
 app.use(passport.initialize());

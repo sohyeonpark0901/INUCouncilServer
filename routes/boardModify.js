@@ -16,15 +16,11 @@ var storage = multer.diskStorage({
 
 var upload = multer({ storage: storage })
 var pool=mysql.createPool({
-  host:'',
-  user:'',
-  password:'',
-  database:'',
-  connectionLimit:10
-}); 
+  
+
+});  
 
 passport.deserializeUser(function(department, done) {
-  console.log('deserializeUser',department)
   var sql='SELECT * FROM users WHERE username=?';
   pool.getConnection((err,connection) =>{
     if(err) throw err;
@@ -54,7 +50,6 @@ router.post('/',upload.array('userfile',15),function(req,res){
     let sqlUpdate='UPDATE board_db set title=?,content=?,department=? WHERE content_serial_id=?';
     let sqlFileDelete='DELETE FROM file_table WHERE keyNum=?';
     let sqlFileInsert='INSERT INTO file_table (keyNum,fileName,department) VALUES ?';
-    console.log(req.body)
     pool.getConnection(async (err,connection) =>{
       if(err) throw err;
       else{
@@ -71,7 +66,6 @@ router.post('/',upload.array('userfile',15),function(req,res){
          else if(req.files == null || req.files == undefined || req.files == "" ){
            if(err) throw err;
            else{
-                 console.log('only board_db is sucess');
                    res.json({ans:true});
            }
            connection.destroy();
@@ -81,7 +75,6 @@ router.post('/',upload.array('userfile',15),function(req,res){
               await connection.query(sqlFileInsert,[Value],function(err){
                if(err){
                   console.log(err);
-                  console.log('query err')
                  }
                  else{
                    res.json({ans:true});

@@ -22,14 +22,10 @@ var storage = multer.diskStorage({
 const fcm = require('./fcm')
 var upload = multer({ storage: storage })
 var pool=mysql.createPool({
-  host:'',
-  user:'',
-  password:'',
-  database:'',
-  connectionLimit:10
+ 
+
 }); 
 passport.deserializeUser(function(department, done) {
-  console.log('deserializeUser',department)
   var sql='SELECT * FROM users WHERE username=?';
   pool.getConnection((err,connection) =>{
     if(err) throw err;
@@ -76,7 +72,6 @@ router.post('/',upload.array('userfile',15), function(req,res){
               if(err) throw err;
               else{
                 await fcm(department);
-                    console.log('Except file boardSave and fcm is sucess');
 
                 res.json({ans:true});
               }
@@ -84,16 +79,13 @@ router.post('/',upload.array('userfile',15), function(req,res){
             }
 
            else {
-             console.log(result);
                 await req.files.map(Data => Value.push([result.insertId,Data.filename,department]))
                 await connection.query(sqlFile,[Value], async function(err){
                  if(err){
                     console.log(err);
-                    console.log('query err')
                    }
                    else{
                     await fcm(department);
-                    console.log('boardSave and fcm is sucess');
                      res.json({ans:true});
                      }
                      connection.destroy();

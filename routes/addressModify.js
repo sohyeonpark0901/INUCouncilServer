@@ -5,15 +5,10 @@ var passport = require('passport')
 var LocalStrategy = require('passport-local').Strategy
 var mysql=require('mysql');
 var pool=mysql.createPool({
-  host:'',
-  user:'',
-  password:'',
-  database:'',
-  connectionLimit:10
+ 
 }); 
 
 passport.deserializeUser(function(department, done) {
-  console.log('deserializeUser',department)
   var sql='SELECT * FROM users WHERE username=?';
   pool.getConnection((err,connection) =>{
     if(err) throw err;
@@ -43,14 +38,12 @@ router.post('/',function(req,res){
   var etc=req.body.etc;
   var department=req.body.department;
   var addressId=req.body.addressId;
-  console.log(name,phoneNumber,email,position,etc,department,addressId)
   pool.getConnection((err,connection) =>{
     if(err) throw err;
     else{
   connection.query(sql,[name,phoneNumber,email,position,etc,department,addressId], function(err,result){
      if(err){
        console.log(err);
-       console.log('AddressModify is fail');
      }else{
       
        if(result.affectedRows===0){

@@ -16,14 +16,9 @@ var storage = multer.diskStorage({
 
 var upload = multer({ storage: storage })
 var pool=mysql.createPool({
-  host:'',
-  user:'',
-  password:'',
-  database:'',
-  connectionLimit:10
+ 
 }); 
 passport.deserializeUser(function(department, done) {
-  console.log('deserializeUser',department)
   var sql='SELECT * FROM users WHERE username=?';
   pool.getConnection((err,connection) =>{
     if(err) throw err;
@@ -52,10 +47,8 @@ router.post('/',function(req,res){
       await connection.query(sqlJoin,[department],async function(err,result){
         if(err){
           console.log(err);
-          console.log('join is fail');
         }
         else{
-              console.log('sql sort is sucess');
               res.send(result);
             }
             connection.destroy();

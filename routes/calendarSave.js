@@ -6,14 +6,9 @@ var passport = require('passport')
 var LocalStrategy = require('passport-local').Strategy
 var mysql=require('mysql');
 var pool=mysql.createPool({
-  host:'',
-  user:'',
-  password:'',
-  database:'',
-  connectionLimit:10
+  
 }); 
 passport.deserializeUser(function(department, done) {
-  console.log('deserializeUser',department)
   var sql='SELECT * FROM users WHERE username=?';
   pool.getConnection((err,connection) =>{
     if(err) throw err;
@@ -52,8 +47,6 @@ router.post('/',function(req,res){
           throw err;
         }else{
           res.json({ans:true});
-          console.log(result);
-          console.log('calendarSave is sucess');
         }
         connection.destroy();
       })
