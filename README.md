@@ -1,6 +1,6 @@
 # INUnion SERVER
 
-<center><img src="image/icon.png" width="400" height="400"></center>
+<center><img src="https://raw.githubusercontent.com/ChoiAhHyun/INUCouncilAndroid/master/image/icon.png" width="400" height="400"></center>
 
 인천대학교 과 학생회 공지 전달 어플리케이션
 
