@@ -29,7 +29,7 @@
     "fcm-notification": "^2.0.0",
     "firebase": "^5.8.2",
     "jsonwebtoken": "^8.3.0",
-    "knex": "^0.15.2",
+    "knex": "^2.4.0",
     "lodash": "^4.17.10",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.23",
